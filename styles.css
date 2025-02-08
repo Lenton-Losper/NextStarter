@@ -1,170 +1,274 @@
- /* General Styles */
-* {
+/* General Styles */
+body {
   margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400; /* Regular weight */
+  color: #e0e0e0; /* Light gray for text */
+  background-color: #0A0A0A; /* Pure black background */
 }
 
-body {
-  font-family: 'Inter', sans-serif;
-  line-height: 1.6;
-  color: #333;
-  background: #f9f9f9;
+h1, h2, h3 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600; /* Bold for headers */
 }
 
 .container {
   width: 90%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem 0;
+  text-align: center;
 }
 
-h1, h2, h3 {
-  font-weight: 700;
-  line-height: 1.2;
+/* Header */
+header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px 0;
+  background: transparent;
+  color: #e0e0e0;
+  z-index: 10;
 }
 
-h1 {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
+header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-h2 {
-  font-size: 2rem;
-  margin-bottom: 1rem;
+nav ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  gap: 20px;
 }
 
-h3 {
-  font-size: 1.5rem;
-  margin-bottom: 0.5rem;
+nav ul li {
+  display: inline;
 }
 
-p {
-  font-size: 1.1rem;
-  color: #555;
-  margin-bottom: 1.5rem;
+nav ul li a {
+  color: #66A1FF; /* Soft, light blue for links */
+  text-decoration: none;
+  font-weight: bold;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+nav ul li a:hover {
+  transform: scale(1.1); /* Slightly enlarge on hover */
+  color: #0070F3; /* Bright blue when hovered */
 }
 
 /* Hero Section */
 .hero {
-  background: url('startup-hero.jpg') no-repeat center center/cover;
-  color: #fff;
+  animation: fadeIn 1.5s ease-in-out;
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
-  padding: 6rem 0;
+  color: #e0e0e0;
 }
 
-.hero h1 {
-  font-size: 3rem;
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
-.hero p {
-  font-size: 1.2rem;
-  margin-bottom: 2rem;
+.hero-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -1;
 }
 
-/* CTA Button */
+.hero-video video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85); /* Darker overlay */
+  z-index: 0;
+}
+
+.hero .container {
+  position: relative;
+  z-index: 1;
+}
+
 .cta-button {
   display: inline-block;
-  padding: 1rem 2.5rem;
-  background: #2563eb;
-  color: #fff;
-  border-radius: 50px;
+  padding: 15px 30px;
+  background-color: #0056A1; /* Bold blue */
+  color: #e0e0e0;
+  font-size: 18px;
   text-decoration: none;
-  font-weight: 600;
-  transition: background 0.3s ease;
+  border-radius: 5px;
+  transition: background-color 0.3s ease-in-out, transform 0.3s ease;
 }
 
 .cta-button:hover {
-  background: #1d4ed8;
+  background-color: #0070F3; /* Bright blue on hover */
+  color: #0A0A0A;
+  transform: scale(1.05); /* Slightly enlarge the button */
 }
 
 /* Features Section */
 .features {
-  background: #fff;
-  padding: 4rem 0;
-  text-align: center;
+  background-color: #121212; /* Pure black background */
+  padding: 60px 0;
 }
 
-.feature-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
-  margin-top: 2rem;
+.features h3 {
+  color: #0070F3; /* Bright blue for heading */
 }
 
-.feature {
-  background: #f4f4f4;
-  padding: 2rem;
-  border-radius: 10px;
-  text-align: center;
+.steps h3 {
+  color: #0070F3;
 }
 
-.feature i {
-  color: #2563eb;
-  margin-bottom: 1rem;
-}
-
-/* How It Works Section */
+/* How It Works */
 .how-it-works {
-  background: #f9f9f9;
-  padding: 4rem 0;
+  background-color: #0A0A0A; /* Dark base background */
+  padding: 60px 0;
+}
+
+/* Waitlist Section */
+.waitlist-section {
+  position: relative;
   text-align: center;
+  color: #e0e0e0;
+  padding: 80px 20px;
 }
 
-.steps {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
-  margin-top: 2rem;
+.waitlist-section h2,
+.waitlist-section p,
+.waitlist-section .cta-button {
+  position: relative;
+  z-index: 2;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+  margin-bottom: 15px;
 }
 
-.step {
-  background: #fff;
-  padding: 2rem;
-  border-radius: 10px;
+/* Contact Section */
+.contact-section {
+  background-color: #121212; /* Pure black background */
+  padding: 60px 0;
+}
+
+.contact-item h3 {
+  color: #0070F3; /* Blue text for headings */
+}
+
+/* See You There Section */
+.see-you-there {
   text-align: center;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 40px 0;
+  background-color: #000000; /* Absolute black for dramatic effect */
 }
 
-.step i {
-  color: #2563eb;
-  margin-bottom: 1rem;
+.see-you-there h2 {
+  color: #e0e0e0;
+  margin-bottom: 20px;
 }
 
-/* Waitlist CTA Section */
-.waitlist-cta {
-  background: #2563eb;
-  color: #fff;
-  text-align: center;
-  padding: 4rem 0;
+.see-you-there-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
 }
 
-.waitlist-cta h2 {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-}
-
-.waitlist-cta p {
-  font-size: 1.2rem;
-  margin-bottom: 2rem;
+.see-you-there-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.5;
 }
 
 /* Footer */
 footer {
-  background: #333;
-  color: #fff;
+  background-color: #0A0A0A; /* Darker background for footer */
+  padding: 20px 0;
   text-align: center;
-  padding: 1.5rem 0;
 }
 
-footer p {
-  margin: 0;
-  color: #fff;
+footer ul {
+  list-style: none;
+  padding: 0;
 }
 
-/* Popup Form Styles */
-.popup {
-  display: none;
+footer ul li {
+  display: inline;
+  margin: 0 15px;
+}
+
+footer ul li a {
+  color: #0070F3; /* Vibrant blue links */
+  text-decoration: none;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+footer ul li a:hover {
+  transform: scale(1.1); /* Slightly enlarge on hover */
+  color: #66A1FF; /* Light blue on hover */
+}
+
+/* Ensure sections are side by side */
+.featureBox, .steps, .contact-details {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  flex-wrap: wrap;
+}
+
+/* Each box with image on top, text below */
+.feature, .step, .contact-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #121212; /* Dark gray-black background for consistency */
+  color: #e0e0e0;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8); /* Darker shadow */
+  text-align: center;
+  padding: 0px;
+  height: 290px;
+  width: 260px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature:hover, .step:hover, .contact-item:hover {
+  transform: scale(1.05); /* Enlarge on hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 1); /* Larger shadow for hover effect */
+}
+
+.feature img, .step img, .contact-item img {
+  width: 100%;
+  height: 55%;
+  object-fit: cover;
+  padding: 0;
+}
+
+/* Popup Styles */
+#form-popup, #thank-you-popup {
+  display: none; /* Hide both popups initially */
   position: fixed;
   top: 0;
   left: 0;
@@ -173,79 +277,78 @@ footer p {
   background: rgba(0, 0, 0, 0.5);
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: 1000; /* Ensure it's above all other content */
 }
 
 .popup-content {
-  background: #fff;
-  padding: 2rem;
-  border-radius: 10px;
+  background-color: #121212;
+  padding: 20px;
+  text-align: center;
+  border-radius: 8px;
   width: 90%;
   max-width: 400px;
-  text-align: center;
-  position: relative;
-}
-
-.popup-content h2 {
-  font-size: 1.8rem;
-  margin-bottom: 1rem;
-}
-
-.popup-content p {
-  font-size: 1rem;
-  margin-bottom: 1.5rem;
-}
-
-.close-btn {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  font-size: 1.5rem;
-  cursor: pointer;
-  color: #333;
-}
-
-.close-btn:hover {
-  color: #2563eb;
-}
-
-.form-group {
-  margin-bottom: 1rem;
-  text-align: left;
-}
-
-.form-group label {
-  display: block;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-}
-
-.form-group input {
-  width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 1rem;
-}
-
-.form-group input:focus {
-  outline: none;
-  border-color: #2563eb;
-}
-
-.cta-button {
-  display: inline-block;
-  padding: 1rem 2.5rem;
-  background: #2563eb;
   color: #fff;
-  border-radius: 50px;
-  text-decoration: none;
-  font-weight: 600;
-  transition: background 0.3s ease;
+}
+
+input[type="text"], input[type="email"] {
+  width: calc(100% - 20px); /* Adjust width to leave space for padding */
+  padding: 10px; /* Add padding to the input field */
+  margin-top: 5px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  background-color: #222;
+  color: #e0e0e0;
+  border: 1px solid #444;
+  box-sizing: border-box; /* Ensure padding is included in the width calculation */
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #0070F3;
   border: none;
+  border-radius: 5px;
+  color: #fff;
   cursor: pointer;
 }
 
-.cta-button:hover {
-  background: #1d4ed8;
+button:hover {
+  background-color: #0056A1;
+}
+
+.popup-content button:hover {
+  background-color: #0070F3; /* Bright blue on hover */
+  color: #0A0A0A;
+  transform: scale(1.05); /* Slightly enlarge the button */
+}
+
+/* Thank You Popup */
+#thank-you-form-popup {
+  background-color: #222;
+  padding: 20px;
+  border-radius: 10px;
+  width: 300px;
+  box-sizing: border-box;
+  text-align: center; /* Center the content */
+}
+
+#thank-you-form-popup p {
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+
+#close-thank-you-popup {
+  width: 100%;
+  padding: 10px;
+  background-color: #007BFF; /* Button background color */
+  color: #fff; /* Text color */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  box-sizing: border-box;
+  transition: background-color 0.3s ease;
+}
+
+#close-thank-you-popup:hover {
+  background-color: #0056b3; /* Darker blue on hover */
 }
