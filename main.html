@@ -17,6 +17,30 @@
     </div>
   </section>
 
+  <!-- Waitlist Form Popup -->
+  <div id="waitlist-form-popup" class="popup">
+    <div class="popup-content">
+      <span class="close-btn" id="close-waitlist-form">&times;</span>
+      <h2>Only 12 Spaces Available</h2>
+      <p>Add your name to the Waitlist</p>
+      <form id="waitlist-form">
+        <div class="form-group">
+          <label for="first-name">First Name *</label>
+          <input type="text" id="first-name" name="first-name" required minlength="2" maxlength="50">
+        </div>
+        <div class="form-group">
+          <label for="last-name">Last Name *</label>
+          <input type="text" id="last-name" name="last-name" required minlength="2" maxlength="50">
+        </div>
+        <div class="form-group">
+          <label for="email">Email *</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <button type="submit" class="cta-button">Start</button>
+      </form>
+    </div>
+  </div>
+
   <!-- Features Section -->
   <section class="features">
     <div class="container">
@@ -86,32 +110,27 @@
     </div>
   </footer>
 
-  <!-- Popup Form -->
-  <div id="waitlist-form-popup" class="popup">
-    <div class="popup-content">
-      <span class="close-btn" id="close-waitlist-form">&times;</span>
-      <h2>Only 12 Spaces Available</h2>
-      <p>Add your name to the Waitlist</p>
-      <form id="waitlist-form">
-        <div class="form-group">
-          <label for="first-name">First Name *</label>
-          <input type="text" id="first-name" name="first-name" required>
-        </div>
-        <div class="form-group">
-          <label for="last-name">Last Name *</label>
-          <input type="text" id="last-name" name="last-name" required>
-        </div>
-        <div class="form-group">
-          <label for="email">Email *</label>
-          <input type="email" id="email" name="email" required>
-        </div>
-        <button type="submit" class="cta-button">Start</button>
-      </form>
-    </div>
-  </div>
+  <!-- Firebase Integration -->
+  <script type="module">
+    // Import Firebase functions
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js";
 
-  <!-- JavaScript for Popup Form -->
-  <script>
+    // Your Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyBhnXfxrd5Ktk-GuUcwx13ZMY6bhBao1Uw",
+      authDomain: "next-starter-28a0f.firebaseapp.com",
+      projectId: "next-starter-28a0f",
+      storageBucket: "next-starter-28a0f.firebasestorage.app",
+      messagingSenderId: "899672520926",
+      appId: "1:899672520926:web:c2ad8aa651ab7592dd2a4f",
+      measurementId: "G-QMKXHKWS1G"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
     // Get references to the popup and buttons
     const popup = document.getElementById("waitlist-form-popup");
     const openButton1 = document.getElementById("open-waitlist-form");
@@ -141,18 +160,63 @@
       }
     });
 
+    // Validate email format
+    const validateEmail = (email) => {
+      const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return regex.test(email);
+    };
+
     // Handle form submission
     const form = document.getElementById("waitlist-form");
-    form.addEventListener("submit", (e) => {
+    form.addEventListener("submit", async (e) => {
       e.preventDefault();
-      const firstName = document.getElementById("first-name").value;
-      const lastName = document.getElementById("last-name").value;
-      const email = document.getElementById("email").value;
 
-      // Here you can send the data to your backend or display a success message
-      alert(`Thank you, ${firstName} ${lastName}! You've been added to the waitlist.`);
-      popup.style.display = "none";
-      form.reset();
+      // Get form data
+      const firstName = document.getElementById("first-name").value.trim();
+      const lastName = document.getElementById("last-name").value.trim();
+      const email = document.getElementById("email").value.trim();
+
+      // Validate form data
+      if (!firstName || !lastName || !email) {
+        alert("Please fill out all fields.");
+        return;
+      }
+
+      if (!validateEmail(email)) {
+        alert("Please enter a valid email address.");
+        return;
+      }
+
+      // Check if the user is already in the waitlist
+      try {
+        const q = query(collection(db, "waitlist"), where("email", "==", email));
+        const querySnapshot = await getDocs(q);
+
+        if (!querySnapshot.empty) {
+          alert("You're already on the waitlist!");
+          popup.style.display = "none";
+          form.reset();
+          return;
+        }
+
+        // Add data to Firestore
+        const docRef = await addDoc(collection(db, "waitlist"), {
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          timestamp: new Date(),
+        });
+
+        console.log("Document written with ID: ", docRef.id);
+
+        // Show success message
+        alert(`Thank you, ${firstName} ${lastName}! You've been added to the waitlist.`);
+        popup.style.display = "none";
+        form.reset();
+      } catch (error) {
+        console.error("Error adding document: ", error);
+        alert("An error occurred. Please try again.");
+      }
     });
   </script>
 </body>
