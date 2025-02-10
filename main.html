@@ -115,6 +115,7 @@
     </div>
   </section>
 
+
   <!-- Waitlist Section -->
   <section id="waitlist" class="waitlist-section">
     <div class="container">
@@ -161,69 +162,54 @@
 
   <!-- Firebase Integration Script -->
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
-    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js";
+  import { db } from "./firebase.js";
+  import { collection, addDoc } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js";
 
-    // Your Firebase configuration
-    const firebaseConfig = {
-      apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-      authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-      projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-      storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-      messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-      appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-      measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
-    };
-    
+  // Get references to the popup and buttons
+  const popup = document.getElementById("form-popup");
+  const openButton1 = document.getElementById("open-waitlist-form");
+  const openButton2 = document.getElementById("open-waitlist-form-2");
+  const closeButton = document.getElementById("close-thank-you-popup");
 
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+  // Open the popup when the "Join the Waitlist" button is clicked
+  openButton1.addEventListener("click", (e) => {
+    e.preventDefault();
+    popup.style.display = "flex";
+  });
 
-    // Get references to the popup and buttons
-    const popup = document.getElementById("form-popup");
-    const openButton1 = document.getElementById("open-waitlist-form");
-    const openButton2 = document.getElementById("open-waitlist-form-2");
-    const closeButton = document.getElementById("close-thank-you-popup");
+  openButton2.addEventListener("click", (e) => {
+    e.preventDefault();
+    popup.style.display = "flex";
+  });
 
-    // Open the popup when the "Join the Waitlist" button is clicked
-    openButton1.addEventListener("click", (e) => {
-      e.preventDefault();
-      popup.style.display = "flex";
-    });
+  // Close the popup when the "Close" button is clicked
+  closeButton.addEventListener("click", () => {
+    popup.style.display = "none";
+    document.getElementById('thank-you-popup').style.display = 'none';
+  });
 
-    openButton2.addEventListener("click", (e) => {
-      e.preventDefault();
-      popup.style.display = "flex";
-    });
+  // Form submission event
+  document.getElementById('waitlist-form').addEventListener('submit', async function(event) {
+    event.preventDefault();
 
-    // Close the popup when the "Close" button is clicked
-    closeButton.addEventListener("click", () => {
-      popup.style.display = "none";
-      document.getElementById('thank-you-popup').style.display = 'none';
-    });
+    const firstName = document.getElementById('first-name').value;
+    const lastName = document.getElementById('last-name').value;
+    const email = document.getElementById('email').value;
 
-    // Form submission event
-    document.getElementById('waitlist-form').addEventListener('submit', async function(event) {
-      event.preventDefault();
+    try {
+      await addDoc(collection(db, "waitlist"), {
+        firstName: firstName,
+        lastName: lastName,
+        email: email
+      });
 
-      const firstName = document.getElementById('first-name').value;
-      const lastName = document.getElementById('last-name').value;
-      const email = document.getElementById('email').value;
+      document.getElementById('form-popup').style.display = 'none';
+      document.getElementById('thank-you-popup').style.display = 'flex';
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+  });
+</script>
 
-      try {
-        await addDoc(collection(db, "waitlist"), {
-          firstName: firstName,
-          lastName: lastName,
-          email: email
-        });
-
-        document.getElementById('form-popup').style.display = 'none';
-        document.getElementById('thank-you-popup').style.display = 'flex';
-      } catch (e) {
-        console.error("Error adding document: ", e);
-      }
-    });
-  </script>
 </body>
 </html>
