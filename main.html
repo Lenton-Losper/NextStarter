@@ -18,7 +18,7 @@
         <ul>
           <li><a href="#features">Features</a></li>
           <li><a href="#how-it-works">How It Works</a></li>
-          <li><a href="#signup">Join the Waitlist</a></li>
+          <li><a href="#waitlist">Join the Waitlist</a></li>
         </ul>
       </nav>
     </div>
@@ -28,7 +28,7 @@
   <section class="hero">
     <div class="hero-video">
       <video autoplay muted loop>
-        <source src="Media\test.mp4" type="video/mp4">
+        <source src="Media/test.mp4" type="video/mp4">
         Your browser does not support the video tag.
       </video>
     </div>
@@ -46,17 +46,17 @@
       <h2>Features</h2>
       <div class="featureBox">
         <div class="feature">
-          <img src="Media\SkillBasedMatching.png" alt="Skill Matching">
+          <img src="Media/SkillBasedMatching.png" alt="Skill Matching">
           <h3>Skill-Based Matching</h3>
           <p>Find co-founders with the exact skills your startup needs.</p>
         </div>
         <div class="feature">
-          <img src="Media\PortfolioViewing.jpg" alt="Portfolio Viewing">
+          <img src="Media/PortfolioViewing.jpg" alt="Portfolio Viewing">
           <h3>Portfolio Viewing</h3>
           <p>Evaluate potential co-founders' past work to ensure the right fit.</p>
         </div>
         <div class="feature">
-          <img src="Media\EarlyTractionTools.jpg" alt="Early Traction">
+          <img src="Media/EarlyTractionTools.jpg" alt="Early Traction">
           <h3>Early Traction Tools</h3>
           <p>Build waiting lists and validate your idea before launch.</p>
         </div>
@@ -70,27 +70,27 @@
       <h2>How It Works</h2>
       <div class="steps">
         <div class="step">
-          <img src="Media\CreateProfile.jpg" alt="Create Profile">
+          <img src="Media/CreateProfile.jpg" alt="Create Profile">
           <h3>Create Profile</h3>
           <p>Showcase your startup idea and specify co-founder requirements.</p>
         </div>
         <div class="step">
-          <img src="Media\GetMatched.jpg" alt="Match">
+          <img src="Media/GetMatched.jpg" alt="Match">
           <h3>Get Matched</h3>
           <p>Our algorithm connects you with the right co-founders.</p>
         </div>
         <div class="step">
-          <img src="Media\Collaborate.jpg" alt="Collaborate">
+          <img src="Media/Collaborate.jpg" alt="Collaborate">
           <h3>Collaborate</h3>
           <p>Work on trial projects to test the partnership.</p>
         </div>
         <div class="step">
-          <img src="Media\Launch.jpg" alt="Launch">
+          <img src="Media/Launch.jpg" alt="Launch">
           <h3>Launch</h3>
           <p>Build early traction and grow your startup.</p>
         </div>
       </div>
-      <p class="process-description" >
+      <p class="process-description">
         Next Starter isn’t just about finding a co-founder—it’s about building meaningful connections. Whether you’re looking to collaborate on a project, broaden your network, or find a mentor, our platform brings like-minded founders together. We simplify co-founder matching by allowing founders to create profiles showcasing their ideas and co-founder needs. Our skill-based system connects you with compatible partners, enabling you to review portfolios, pitch ideas, and collaborate on trial projects. Early-stage founders can validate concepts and build traction, while startups can leverage our equity-based fundraising feature to secure investment.
       </p>
     </div>
@@ -102,19 +102,18 @@
       <h2>Contact Us</h2>
       <div class="contact-details">
         <div class="contact-item">
-          <img src="Media\ProfileIcon.png" alt="Email">
+          <img src="Media/ProfileIcon.png" alt="Email">
           <h3>Lenton Losper</h3>
           <p>llosperofficial@gmail.com</p>
         </div>
         <div class="contact-item">
-          <img src="Media\ProfileIcon.png" alt="Phone">
+          <img src="Media/ProfileIcon.png" alt="Phone">
           <h3>James Dishena</h3>
           <p>jamesdishena@gmail.com</p>
         </div>
       </div>
     </div>
   </section>
-
 
   <!-- Waitlist Section -->
   <section id="waitlist" class="waitlist-section">
@@ -123,7 +122,7 @@
       <p>Join the NextStarter Waitlist for additional details and rewards.</p>
       <a href="#" class="cta-button" id="open-waitlist-form-2">Join the Waitlist</a>
       <div class="see-you-there-image">
-        <img src="Media\Collaborate2.jpg" alt="See You There">
+        <img src="Media/Collaborate2.jpg" alt="See You There">
       </div>
     </div>
   </section>
@@ -142,74 +141,143 @@
   <!-- Form Popup -->
   <div id="form-popup" class="popup">
     <div class="popup-content">
+      <span class="close-btn" id="close-form-popup">&times;</span>
       <h3>Join the Waitlist</h3>
       <form id="waitlist-form">
         <input type="text" id="first-name" placeholder="First Name" required>
         <input type="text" id="last-name" placeholder="Last Name" required>
         <input type="email" id="email" placeholder="Email" required>
-        <button type="submit">Submit</button>
+        <button type="submit" class="cta-button">Submit</button>
       </form>
     </div>
   </div>
 
   <!-- Thank You Popup -->
-  <div id="thank-you-popup" class="popup-container" style="display: none;">
-    <div id="thank-you-form-popup">
+  <div id="thank-you-popup" class="popup">
+    <div class="popup-content">
       <p>Thank you for joining the waitlist. Additional information will be emailed to you.</p>
       <button id="close-thank-you-popup" class="cta-button">Close</button>
     </div>
   </div>
 
-  <!-- Firebase Integration Script -->
+  <!-- Firebase Integration -->
   <script type="module">
-  import { db } from "./firebase.js";
-  import { collection, addDoc } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js";
+    // Import Firebase functions
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js";
 
-  // Get references to the popup and buttons
-  const popup = document.getElementById("form-popup");
-  const openButton1 = document.getElementById("open-waitlist-form");
-  const openButton2 = document.getElementById("open-waitlist-form-2");
-  const closeButton = document.getElementById("close-thank-you-popup");
+    // Your Firebase configuration
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "next-starter-28a0f.firebaseapp.com",
+      projectId: "next-starter-28a0f",
+      storageBucket: "next-starter-28a0f.firebasestorage.app",
+      messagingSenderId: "899672520926",
+      appId: "1:899672520926:web:c2ad8aa651ab7592dd2a4f",
+      measurementId: "G-QMKXHKWS1G"
+    };
 
-  // Open the popup when the "Join the Waitlist" button is clicked
-  openButton1.addEventListener("click", (e) => {
-    e.preventDefault();
-    popup.style.display = "flex";
-  });
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
 
-  openButton2.addEventListener("click", (e) => {
-    e.preventDefault();
-    popup.style.display = "flex";
-  });
+    // Get references to the popup and buttons
+    const formPopup = document.getElementById("form-popup");
+    const thankYouPopup = document.getElementById("thank-you-popup");
+    const openButton1 = document.getElementById("open-waitlist-form");
+    const openButton2 = document.getElementById("open-waitlist-form-2");
+    const closeFormPopup = document.getElementById("close-form-popup");
+    const closeThankYouPopup = document.getElementById("close-thank-you-popup");
 
-  // Close the popup when the "Close" button is clicked
-  closeButton.addEventListener("click", () => {
-    popup.style.display = "none";
-    document.getElementById('thank-you-popup').style.display = 'none';
-  });
+    // Open the form popup when the "Join the Waitlist" button is clicked
+    openButton1.addEventListener("click", (e) => {
+      e.preventDefault();
+      formPopup.style.display = "block";
+    });
 
-  // Form submission event
-  document.getElementById('waitlist-form').addEventListener('submit', async function(event) {
-    event.preventDefault();
+    openButton2.addEventListener("click", (e) => {
+      e.preventDefault();
+      formPopup.style.display = "block";
+    });
 
-    const firstName = document.getElementById('first-name').value;
-    const lastName = document.getElementById('last-name').value;
-    const email = document.getElementById('email').value;
+    // Close the form popup when the close button is clicked
+    closeFormPopup.addEventListener("click", () => {
+      formPopup.style.display = "none";
+    });
 
-    try {
-      await addDoc(collection(db, "waitlist"), {
-        firstName: firstName,
-        lastName: lastName,
-        email: email
-      });
+    // Close the thank-you popup when the close button is clicked
+    closeThankYouPopup.addEventListener("click", () => {
+      thankYouPopup.style.display = "none";
+    });
 
-      document.getElementById('form-popup').style.display = 'none';
-      document.getElementById('thank-you-popup').style.display = 'flex';
-    } catch (e) {
-      console.error("Error adding document: ", e);
-    }
-  });
-</script>
+    // Close the popups when clicking outside the form
+    window.addEventListener("click", (e) => {
+      if (e.target === formPopup) {
+        formPopup.style.display = "none";
+      }
+      if (e.target === thankYouPopup) {
+        thankYouPopup.style.display = "none";
+      }
+    });
 
+    // Validate email format
+    const validateEmail = (email) => {
+      const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return regex.test(email);
+    };
+
+    // Handle form submission
+    const form = document.getElementById("waitlist-form");
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      // Get form data
+      const firstName = document.getElementById("first-name").value.trim();
+      const lastName = document.getElementById("last-name").value.trim();
+      const email = document.getElementById("email").value.trim();
+
+      // Validate form data
+      if (!firstName || !lastName || !email) {
+        alert("Please fill out all fields.");
+        return;
+      }
+
+      if (!validateEmail(email)) {
+        alert("Please enter a valid email address.");
+        return;
+      }
+
+      // Check if the user is already in the waitlist
+      try {
+        const q = query(collection(db, "waitlist"), where("email", "==", email));
+        const querySnapshot = await getDocs(q);
+
+        if (!querySnapshot.empty) {
+          alert("You're already on the waitlist!");
+          formPopup.style.display = "none";
+          form.reset();
+          return;
+        }
+
+        // Add data to Firestore
+        const docRef = await addDoc(collection(db, "waitlist"), {
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          timestamp: new Date(),
+        });
+
+        console.log("Document written with ID: ", docRef.id);
+
+        // Show thank-you popup
+        formPopup.style.display = "none";
+        thankYouPopup.style.display = "block";
+        form.reset();
+      } catch (error) {
+        console.error("Error adding document: ", error);
+        alert("An error occurred. Please try again.");
+      }
+    });
+  </script>
 </body>
 </html>
